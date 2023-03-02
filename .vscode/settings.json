@@ -3,6 +3,7 @@
     "cSpell.words": [
         "CUDA",
         "dataloaders",
-        "resnet"
+        "resnet",
+        "scandir"
     ]
 }
