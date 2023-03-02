@@ -343,4 +343,4 @@ poetry.toml
 
 .python-version
 model.pth
-data
+scripts/data
