@@ -363,3 +363,5 @@ poetry.toml
 .python-version
 model.pth
 scripts/data
+data
+backup
