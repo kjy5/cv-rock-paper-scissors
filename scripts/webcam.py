@@ -14,11 +14,13 @@ elif torch.backends.mps.is_available():
     device = torch.device("mps")
 
 # Set up preprocessing for the image
-preprocess = transforms.Compose([
-    transforms.ToTensor(),
-    transforms.Resize(224),
-    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-])
+preprocess = transforms.Compose(
+    [
+        transforms.ToTensor(),
+        transforms.Resize(224),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+    ]
+)
 
 # Train this model with the notebook
 model = torch.load("model.pth")
@@ -46,8 +48,8 @@ with torch.no_grad():
             break
 
         # Display the resulting frame
-        cv.imshow('frame', frame)
-        if cv.waitKey(1) == ord('q'):
+        cv.imshow("frame", frame)
+        if cv.waitKey(1) == ord("q"):
             break
 
         # Convert to RGB from BGR
