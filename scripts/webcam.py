@@ -21,12 +21,12 @@ preprocess = transforms.Compose([
 ])
 
 # Train this model with the notebook
-model = torch.load("model.pth")
+model = torch.load("scripts/model.pth")
 model = torch.jit.script(model)
 model.to(device)
 model.eval()
 
-with open("data/imagenet_classes.txt", "r") as f:
+with open("scripts/data/labels.txt", "r") as f:
     categories = [s.strip() for s in f.readlines()]
 
 cap = cv.VideoCapture(0)
@@ -59,7 +59,7 @@ with torch.no_grad():
         probabilities = torch.softmax(output[0], dim=0)
 
         # Show top categories per image
-        top_prob, top_catid = torch.topk(probabilities, 10)
+        top_prob, top_catid = torch.topk(probabilities, 4)
         message = ""
         for i in range(top_prob.size(0)):
             message += f"{top_prob[i].item()*100:.2f}% {categories[top_catid[i]]}\n"
