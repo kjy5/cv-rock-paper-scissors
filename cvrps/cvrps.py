@@ -15,7 +15,9 @@ device = torch.device("cpu")
 args: argparse.Namespace
 
 human_score = 0
+detected_class = "xxxxxxxx"
 computer_score = 0
+played_class = "xxxxxxxx"
 
 
 # noinspection PyUnresolvedReferences
@@ -84,85 +86,103 @@ def draw_ui(frame: np.ndarray) -> None:
     # Variables
     margin = int(0.02 * CAM_WIDTH)
 
-    # Human side
-    cv.rectangle(frame, (0, 0), (CAM_X_START, CAM_HEIGHT), (15, 15, 15), -1)
+    for i in range(2):
+        # Create text values
+        x_offset = 0
+        left_coord = CAM_X_START
+        title_text = "You"
+        score_val = human_score
+        detected_title_text = "detected"
+        detected_text = detected_class
+        if i == 1:
+            x_offset = CAM_X_END
+            left_coord = CAM_WIDTH
+            title_text = "Com."
+            score_val = computer_score
+            detected_title_text = "played"
+            detected_text = played_class
 
-    # Title
-    cv.putText(
-        frame,
-        "You",
-        (margin, int(.1 * CAM_HEIGHT)),
-        cv.FONT_HERSHEY_SIMPLEX,
-        2,
-        (255, 255, 255),
-        3,
-        cv.LINE_AA,
-    )
-    cv.line(
-        frame,
-        (margin, int(0.15 * CAM_HEIGHT)),
-        (CAM_X_START - margin, int(0.15 * CAM_HEIGHT)),
-        (255, 255, 255),
-        3,
-    )
+        # Background
+        cv.rectangle(frame, (x_offset, 0), (left_coord, CAM_HEIGHT), (15, 15, 15), -1)
 
-    # Score box
-    cv.putText(
-        frame,
-        "Score",
-        (margin, int(0.25 * CAM_HEIGHT)),
-        cv.FONT_HERSHEY_SIMPLEX,
-        1,
-        (200, 200, 200),
-        2,
-        cv.LINE_AA,
-    )
-    cv.putText(
-        frame,
-        str(human_score),
-        (margin * 4, int(0.38 * CAM_HEIGHT)),  # TODO: Use true center alignment
-        cv.FONT_HERSHEY_SIMPLEX,
-        2,
-        (255, 255, 255),
-        3,
-        cv.LINE_AA,
-    )
-    cv.rectangle(
-        frame,
-        (margin, int(0.3 * CAM_HEIGHT)),
-        (CAM_X_START - margin, int(0.4 * CAM_HEIGHT)),
-        (200, 200, 200),
-        2,
-    )
+        # Title
+        cv.putText(
+            frame,
+            title_text,
+            (x_offset + margin, int(.1 * CAM_HEIGHT)),
+            cv.FONT_HERSHEY_SIMPLEX,
+            2,
+            (255, 255, 255),
+            3,
+            cv.LINE_AA,
+        )
+        cv.line(
+            frame,
+            (x_offset + margin, int(0.15 * CAM_HEIGHT)),
+            (left_coord - margin, int(0.15 * CAM_HEIGHT)),
+            (255, 255, 255),
+            3,
+        )
 
-    # Detected
-    cv.putText(
-        frame,
-        "Detected",
-        (margin, int(.5 * CAM_HEIGHT)),
-        cv.FONT_HERSHEY_SIMPLEX,
-        1,
-        (200, 200, 200),
-        2,
-        cv.LINE_AA,
-    )
-    cv.putText(
-        frame,
-        "Scissors",
-        (margin * 2, int(0.63 * CAM_HEIGHT)),  # TODO: Use true center alignment
-        cv.FONT_HERSHEY_SIMPLEX,
-        1.5,
-        (255, 255, 255),
-        3,
-        cv.LINE_AA,
-    )
-    cv.rectangle(
-        frame,
-        (margin, int(0.55 * CAM_HEIGHT)),
-        (CAM_X_START - margin, int(0.65 * CAM_HEIGHT)),
-        (200, 200, 200),
-        2,
-    )
+        # Score box
+        cv.putText(
+            frame,
+            "Score",
+            (x_offset + margin, int(0.25 * CAM_HEIGHT)),
+            cv.FONT_HERSHEY_SIMPLEX,
+            1,
+            (200, 200, 200),
+            2,
+            cv.LINE_AA,
+        )
+        cv.putText(
+            frame,
+            str(score_val),
+            (x_offset + margin * 4, int(0.38 * CAM_HEIGHT)),
+            # TODO: Use true center alignment
+            cv.FONT_HERSHEY_SIMPLEX,
+            2,
+            (255, 255, 255),
+            3,
+            cv.LINE_AA,
+        )
+        cv.rectangle(
+            frame,
+            (x_offset + margin, int(0.3 * CAM_HEIGHT)),
+            (left_coord - margin, int(0.4 * CAM_HEIGHT)),
+            (200, 200, 200),
+            2,
+        )
+
+        # Detected / Played
+        cv.putText(
+            frame,
+            detected_title_text,
+            (x_offset + margin, int(.5 * CAM_HEIGHT)),
+            cv.FONT_HERSHEY_SIMPLEX,
+            1,
+            (200, 200, 200),
+            2,
+            cv.LINE_AA,
+        )
+        cv.putText(
+            frame,
+            detected_text,
+            (x_offset + margin, int(0.63 * CAM_HEIGHT)),
+            # TODO: Use true center alignment
+            cv.FONT_HERSHEY_SIMPLEX,
+            1.5,
+            (255, 255, 255),
+            3,
+            cv.LINE_AA,
+        )
+        cv.rectangle(
+            frame,
+            (x_offset + margin, int(0.55 * CAM_HEIGHT)),
+            (left_coord - margin, int(0.65 * CAM_HEIGHT)),
+            (200, 200, 200),
+            2,
+        )
 
 
 def main() -> None:
