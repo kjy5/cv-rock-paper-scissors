@@ -9,6 +9,9 @@ def draw_ui(frame: np.ndarray) -> None:
     :param frame: Webcam frame to draw on
     :return: None
     """
+    # Resize to 720p
+    frame = cv.resize(frame, (CAM_WIDTH, CAM_HEIGHT))
+
     # Flip to help with visuals
     cv.flip(frame, 1, frame)
 

@@ -7,6 +7,7 @@ CAM_SHAPE = [720, 1280, 3]
 CAM_HEIGHT, CAM_WIDTH = CAM_SHAPE[:2]
 CAM_X_START = (CAM_WIDTH - CAM_HEIGHT) // 2
 CAM_X_END = CAM_WIDTH - CAM_X_START
+CLASSES = ["clutter", "paper", "rock", "scissors"]
 
 # Global variables
 device = torch.device("cpu")

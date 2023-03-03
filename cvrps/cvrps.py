@@ -88,11 +88,8 @@ def main() -> None:
             print("Can't receive frame (stream end?). Exiting ...")
             break
 
-        # Resize to 720p
-        frame = cv.resize(frame, (CAM_WIDTH, CAM_HEIGHT))
-
-        # Save copy for processing
-        to_process_frame = np.copy(frame[:CAM_HEIGHT, CAM_X_START:CAM_X_END])
+        # Save a copy of the frame to process
+        to_process_frame = np.copy(frame)
 
         # Draw UI
         draw_ui(frame)
