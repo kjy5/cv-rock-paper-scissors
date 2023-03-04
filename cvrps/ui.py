@@ -75,7 +75,7 @@ def draw_ui(frame: np.ndarray) -> None:
         left_coord = CAM_X_START
         title_text = "YOU"
         score_val = human_score
-        detected_title_text = "Detected"
+        detected_title_text = f"Detected ({detected_confidence}%)"
         detected_text = detected_class
         if i == 1:
             x_offset = CAM_X_END
@@ -109,7 +109,7 @@ def draw_ui(frame: np.ndarray) -> None:
         put_text(
             frame,
             "Score",
-            (x_offset + CAM_X_START // 2, 0.2 * CAM_HEIGHT),
+            (x_offset + CAM_X_START // 2, 0.25 * CAM_HEIGHT),
             1,
             (200, 200, 200),
             2,
@@ -117,15 +117,15 @@ def draw_ui(frame: np.ndarray) -> None:
         put_text(
             frame,
             score_val,
-            (x_offset + CAM_X_START // 2, 0.3 * CAM_HEIGHT),
+            (x_offset + CAM_X_START // 2, 0.35 * CAM_HEIGHT),
             2,
             (255, 255, 255),
             3,
         )
         cv.rectangle(
             frame,
-            (x_offset + margin, int(0.25 * CAM_HEIGHT)),
-            (left_coord - margin, int(0.35 * CAM_HEIGHT)),
+            (x_offset + margin, int(0.3 * CAM_HEIGHT)),
+            (left_coord - margin, int(0.4 * CAM_HEIGHT)),
             (200, 200, 200),
             2,
         )
@@ -134,7 +134,7 @@ def draw_ui(frame: np.ndarray) -> None:
         put_text(
             frame,
             detected_title_text,
-            (x_offset + CAM_X_START // 2, 0.4 * CAM_HEIGHT),
+            (x_offset + CAM_X_START // 2, 0.5 * CAM_HEIGHT),
             1,
             (200, 200, 200),
             2,
@@ -142,15 +142,15 @@ def draw_ui(frame: np.ndarray) -> None:
         put_text(
             frame,
             detected_text,
-            (x_offset + CAM_X_START // 2, 0.5 * CAM_HEIGHT),
+            (x_offset + CAM_X_START // 2, 0.6 * CAM_HEIGHT),
             1.5,
             (255, 255, 255),
             3,
         )
         cv.rectangle(
             frame,
-            (x_offset + margin, int(0.45 * CAM_HEIGHT)),
-            (left_coord - margin, int(0.55 * CAM_HEIGHT)),
+            (x_offset + margin, int(0.55 * CAM_HEIGHT)),
+            (left_coord - margin, int(0.65 * CAM_HEIGHT)),
             (200, 200, 200),
             2,
         )
