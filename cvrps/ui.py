@@ -1,6 +1,24 @@
+from common import *
 import cv2 as cv
 import numpy as np
-from common import *
+
+# Global variables
+frame_needs_scaling = False
+
+
+def scale_frame(frame: np.ndarray) -> np.ndarray:
+    """
+    Scale frame to target size
+    Remembers if scaling is needed for next frame
+    :param frame: Webcam frame to scale
+    :return: Scaled frame
+    """
+    global frame_needs_scaling
+    if frame_needs_scaling or frame.shape != CAM_SHAPE:
+        out = cv.resize(frame, (CAM_WIDTH, CAM_HEIGHT))
+        frame_needs_scaling = True
+        return out
+    return frame
 
 
 def draw_ui(frame: np.ndarray) -> None:
@@ -9,8 +27,6 @@ def draw_ui(frame: np.ndarray) -> None:
     :param frame: Webcam frame to draw on
     :return: None
     """
-    # Resize to 720p
-    frame = cv.resize(frame, (CAM_WIDTH, CAM_HEIGHT))
 
     # Flip to help with visuals
     cv.flip(frame, 1, frame)
