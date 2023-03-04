@@ -21,6 +21,41 @@ def scale_frame(frame: np.ndarray) -> np.ndarray:
     return frame
 
 
+def put_text(
+    frame: np.ndarray,
+    text: any,
+    location: tuple[any, any],
+    size: int,
+    color: tuple[int, int, int],
+    thickness: int,
+) -> None:
+    """
+    Put text centered on location
+    :param frame: Webcam frame to draw on
+    :param text: Text to draw
+    :param location: Center of text
+    :param size: Font size
+    :param color: Color of text
+    :param thickness: Thickness of text
+    :return: None
+    """
+    font = cv.FONT_HERSHEY_SIMPLEX
+    text_size, baseline = cv.getTextSize(str(text), font, size, thickness)
+    cv.putText(
+        frame,
+        str(text),
+        (
+            int(location[0]) - text_size[0] // 2,
+            int(location[1]) - baseline // 8 + text_size[1] // 2,
+        ),
+        font,
+        size,
+        color,
+        thickness,
+        cv.LINE_AA,
+    )
+
+
 def draw_ui(frame: np.ndarray) -> None:
     """
     Draw UI
@@ -54,15 +89,13 @@ def draw_ui(frame: np.ndarray) -> None:
         cv.rectangle(frame, (x_offset, 0), (left_coord, CAM_HEIGHT), (15, 15, 15), -1)
 
         # Title
-        cv.putText(
+        put_text(
             frame,
             title_text,
-            (x_offset + margin, int(.1 * CAM_HEIGHT)),
-            cv.FONT_HERSHEY_SIMPLEX,
+            (x_offset + CAM_X_START // 2, 0.1 * CAM_HEIGHT),
             2,
             (255, 255, 255),
             3,
-            cv.LINE_AA,
         )
         cv.line(
             frame,
@@ -73,61 +106,51 @@ def draw_ui(frame: np.ndarray) -> None:
         )
 
         # Score box
-        cv.putText(
+        put_text(
             frame,
             "Score",
-            (x_offset + margin, int(0.25 * CAM_HEIGHT)),
-            cv.FONT_HERSHEY_SIMPLEX,
+            (x_offset + CAM_X_START // 2, 0.2 * CAM_HEIGHT),
             1,
             (200, 200, 200),
             2,
-            cv.LINE_AA,
         )
-        cv.putText(
+        put_text(
             frame,
-            str(score_val),
-            (x_offset + margin * 4, int(0.38 * CAM_HEIGHT)),
-            # TODO: Use true center alignment
-            cv.FONT_HERSHEY_SIMPLEX,
+            score_val,
+            (x_offset + CAM_X_START // 2, 0.3 * CAM_HEIGHT),
             2,
             (255, 255, 255),
             3,
-            cv.LINE_AA,
         )
         cv.rectangle(
             frame,
-            (x_offset + margin, int(0.3 * CAM_HEIGHT)),
-            (left_coord - margin, int(0.4 * CAM_HEIGHT)),
+            (x_offset + margin, int(0.25 * CAM_HEIGHT)),
+            (left_coord - margin, int(0.35 * CAM_HEIGHT)),
             (200, 200, 200),
             2,
         )
 
         # Detected / Played
-        cv.putText(
+        put_text(
             frame,
             detected_title_text,
-            (x_offset + margin, int(.5 * CAM_HEIGHT)),
-            cv.FONT_HERSHEY_SIMPLEX,
+            (x_offset + CAM_X_START // 2, 0.4 * CAM_HEIGHT),
             1,
             (200, 200, 200),
             2,
-            cv.LINE_AA,
         )
-        cv.putText(
+        put_text(
             frame,
             detected_text,
-            (x_offset + margin, int(0.63 * CAM_HEIGHT)),
-            # TODO: Use true center alignment
-            cv.FONT_HERSHEY_SIMPLEX,
+            (x_offset + CAM_X_START // 2, 0.5 * CAM_HEIGHT),
             1.5,
             (255, 255, 255),
             3,
-            cv.LINE_AA,
         )
         cv.rectangle(
             frame,
-            (x_offset + margin, int(0.55 * CAM_HEIGHT)),
-            (left_coord - margin, int(0.65 * CAM_HEIGHT)),
+            (x_offset + margin, int(0.45 * CAM_HEIGHT)),
+            (left_coord - margin, int(0.55 * CAM_HEIGHT)),
             (200, 200, 200),
             2,
         )

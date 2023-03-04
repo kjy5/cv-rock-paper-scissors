@@ -10,9 +10,9 @@ CLASSES = ["clutter", "paper", "rock", "scissors"]
 
 # Global variables
 human_score = 0
-detected_class = "xxxxxxxx"
+detected_class = "Scissors"
 computer_score = 0
-played_class = "xxxxxxxx"
+played_class = "Scissors"
 
 
 def configure_argparse() -> argparse.ArgumentParser:
