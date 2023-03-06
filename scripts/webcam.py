@@ -23,15 +23,15 @@ preprocess = transforms.Compose(
 )
 
 # Train this model with the notebook
-model = torch.load("scripts/model.pth")
+model = torch.load("model.pth")
 model = torch.jit.script(model)
 model.to(device)
 model.eval()
 
-with open("scripts/data/labels.txt", "r") as f:
+with open("data/labels.txt", "r") as f:
     categories = [s.strip() for s in f.readlines()]
 
-cap = cv.VideoCapture(0)
+cap = cv.VideoCapture(1)
 if not cap.isOpened():
     print("Cannot open camera")
     exit()

@@ -13,6 +13,7 @@ def main() -> None:
 
     # Setup PyTorch
     configure_torch_gpu()
+    load_model(args.model_path)
 
     # Initialize camera
     cam = initialize_camera(args.camera_idx)

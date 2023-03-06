@@ -1,4 +1,5 @@
 import argparse
+import torch
 
 # Constants
 WINDOW_NAME = "CV Rock Paper Scissors"
@@ -32,6 +33,14 @@ def configure_argparse() -> argparse.ArgumentParser:
         dest="camera_idx",
         default=0,
         help="Video Capture Device Index (default: 0)",
+    )
+    parser.add_argument(
+        "-m",
+        "--model",
+        type=str,
+        dest="model_path",
+        default="model.pth",
+        help="Model path (default: model.pth)",
     )
 
     return parser

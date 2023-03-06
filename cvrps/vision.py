@@ -4,6 +4,7 @@ import torch
 
 # Global variables
 device = torch.device("cpu")
+model: torch.jit.ScriptModule
 
 
 # noinspection PyUnresolvedReferences
@@ -40,3 +41,17 @@ def initialize_camera(cam_idx: int) -> cv.VideoCapture:
     cv.namedWindow(WINDOW_NAME, cv.WINDOW_NORMAL)
 
     return cam
+
+
+def load_model(path: str) -> None:
+    """
+    Load model from path
+    :param path: Path to model
+    :return: None
+    """
+
+    global model
+    model = torch.load(path)
+    model = torch.jit.script(model)
+    model.to(device)
+    model.eval()
