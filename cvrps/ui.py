@@ -56,6 +56,39 @@ def put_text(
     )
 
 
+def put_text_rect(
+    frame: np.ndarray,
+    text: any,
+    location: tuple[any, any],
+    size: int,
+    color: tuple[int, int, int],
+    thickness: int,
+) -> None:
+    """
+    Put rect based on text centered on location
+    :param frame: Webcam frame to draw on
+    :param text: Text to draw
+    :param location: Center of text
+    :param size: Font size
+    :param color: Color of text
+    :param thickness: Thickness of text
+    :return: None
+    """
+    font = cv.FONT_HERSHEY_SIMPLEX
+    text_size, baseline = cv.getTextSize(str(text), font, size, thickness)
+    start_point = (
+        int(location[0]) - text_size[0] // 2,
+        int(location[1]) + baseline + text_size[1] // 2,
+    )
+    cv.rectangle(
+        frame,
+        start_point,
+        (start_point[0] + text_size[0], start_point[1] - text_size[1] * 2),
+        color,
+        -1,
+    )
+
+
 def scale_and_flip(frame: np.ndarray) -> np.ndarray:
     """
     Scale and flip frame
@@ -71,8 +104,9 @@ def draw_start_screen(frame: np.ndarray) -> None:
     :param frame: Webcam frame to draw on
     """
     start_text = "Press [SPACE] to play, [Q] to quit"
-    # text_size, baseline = cv.getTextSize(str(text), font, size, thickness)
-    # cv.rectangle(frame, (0, 0), (CAM_WIDTH, CAM_HEIGHT), (15, 15, 15), -1)
+    put_text_rect(
+        frame, start_text, (CAM_WIDTH // 2, 0.2 * CAM_HEIGHT), 1, (100, 100, 100), 3
+    )
     put_text(
         frame,
         start_text,
