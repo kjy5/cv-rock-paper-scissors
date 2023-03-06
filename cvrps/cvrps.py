@@ -1,6 +1,6 @@
 from ui import *
 from vision import *
-import common
+import random
 
 # Global Variables
 game_state = GameState.START
@@ -32,9 +32,6 @@ def main() -> None:
             print("Can't receive frame (stream end?). Exiting ...")
             break
 
-        # Run the current frame through the model
-        make_prediction(frame)
-
         # Scale frame to target size
         # frame = scale_frame(frame)
         frame = scale_and_flip(frame)
@@ -44,9 +41,20 @@ def main() -> None:
             case GameState.START:
                 draw_start_screen(frame)
             case GameState.COUNT:
+                # Draw countdown
                 if draw_count_down(frame):
                     game_state = GameState.EVAL
             case GameState.EVAL:
+                # Run the current frame through the model
+                make_prediction(frame)
+
+                # TODO: prompt user again if clutter
+
+                # Computer pick a gesture
+                # random.randint(3)
+                game_state = GameState.RESULT
+            case GameState.RESULT:
+
                 pass
             case _:
                 pass

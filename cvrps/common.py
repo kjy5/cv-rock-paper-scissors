@@ -23,6 +23,7 @@ class GameState(Enum):
     START = 0
     COUNT = 1
     EVAL = 2
+    RESULT = 3
 
 
 def configure_argparse() -> argparse.ArgumentParser:
