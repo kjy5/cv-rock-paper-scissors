@@ -11,8 +11,6 @@ CLASSES = ["clutter", "paper", "rock", "scissors"]
 
 # Global variables
 human_score = 0
-detected_class = "Scissors"
-detected_confidence = 99
 computer_score = 0
 played_class = "Scissors"
 

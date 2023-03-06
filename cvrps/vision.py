@@ -8,6 +8,9 @@ import numpy as np
 device = torch.device("cpu")
 model: torch.jit.ScriptModule
 
+detected_class = "Scissors"
+detected_confidence = 99
+
 preprocess = transforms.Compose(
     [
         transforms.ToTensor(),
@@ -82,4 +85,4 @@ def make_prediction(frame: np.ndarray) -> None:
 
     global detected_class, detected_confidence
     detected_class = CLASSES[gesture]
-    detected_confidence = int(output[gesture])
+    detected_confidence = int(output[gesture] * 100)

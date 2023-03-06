@@ -1,4 +1,5 @@
 from common import *
+import vision
 import cv2 as cv
 import numpy as np
 
@@ -136,8 +137,8 @@ def draw_ui(frame: np.ndarray) -> None:
         left_coord = CAM_X_START
         title_text = "YOU"
         score_val = human_score
-        detected_title_text = f"Detected ({detected_confidence}%)"
-        detected_text = detected_class
+        detected_title_text = f"Detected ({vision.detected_confidence}%)"
+        detected_text = vision.detected_class
         if i == 1:
             x_offset = CAM_X_END
             left_coord = CAM_WIDTH
