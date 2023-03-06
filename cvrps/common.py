@@ -1,5 +1,5 @@
 import argparse
-import torch
+from enum import Enum
 
 # Constants
 WINDOW_NAME = "CV Rock Paper Scissors"
@@ -15,6 +15,16 @@ detected_class = "Scissors"
 detected_confidence = 99
 computer_score = 0
 played_class = "Scissors"
+
+
+class GameState(Enum):
+    """
+    Game state
+    """
+
+    START = 0
+    PLAY = 1
+    END = 2
 
 
 def configure_argparse() -> argparse.ArgumentParser:

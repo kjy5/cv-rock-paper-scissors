@@ -1,6 +1,8 @@
 from ui import *
 from vision import *
 
+# Global Variables
+game_state = GameState.START
 
 def main() -> None:
     """
@@ -27,11 +29,23 @@ def main() -> None:
             print("Can't receive frame (stream end?). Exiting ...")
             break
 
-        # Save a copy of the frame to process
-        to_process_frame = np.copy(frame)
+        # Run the current frame through the model
+        make_prediction(frame)
 
         # Scale frame to target size
-        frame = scale_frame(frame)
+        # frame = scale_frame(frame)
+        frame = scale_and_flip(frame)
+
+        # Run based on state
+        match game_state:
+            case GameState.START:
+                draw_start_screen(frame)
+            case GameState.PLAY:
+                pass
+            case GameState.END:
+                pass
+            case _:
+                pass
 
         # Draw UI
         draw_ui(frame)

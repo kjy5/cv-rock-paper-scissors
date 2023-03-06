@@ -56,6 +56,33 @@ def put_text(
     )
 
 
+def scale_and_flip(frame: np.ndarray) -> np.ndarray:
+    """
+    Scale and flip frame
+    :param fame: Webcam frame to scale and flip
+    :return: Scaled and flipped frame
+    """
+    return cv.flip(scale_frame(frame), 1)
+
+
+def draw_start_screen(frame: np.ndarray) -> None:
+    """
+    Draw start screen prompt
+    :param frame: Webcam frame to draw on
+    """
+    start_text = "Press [SPACE] to play, [Q] to quit"
+    # text_size, baseline = cv.getTextSize(str(text), font, size, thickness)
+    # cv.rectangle(frame, (0, 0), (CAM_WIDTH, CAM_HEIGHT), (15, 15, 15), -1)
+    put_text(
+        frame,
+        start_text,
+        (CAM_WIDTH // 2, 0.2 * CAM_HEIGHT),
+        1,
+        (255, 255, 255),
+        3,
+    )
+
+
 def draw_ui(frame: np.ndarray) -> None:
     """
     Draw UI
@@ -64,7 +91,7 @@ def draw_ui(frame: np.ndarray) -> None:
     """
 
     # Flip to help with visuals
-    cv.flip(frame, 1, frame)
+    # cv.flip(frame, 1, frame)
 
     # Variables
     margin = int(0.02 * CAM_WIDTH)
