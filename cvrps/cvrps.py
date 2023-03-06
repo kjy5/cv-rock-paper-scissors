@@ -1,8 +1,10 @@
 from ui import *
 from vision import *
+import common
 
 # Global Variables
 game_state = GameState.START
+
 
 def main() -> None:
     """
@@ -20,6 +22,7 @@ def main() -> None:
     # Initialize camera
     cam = initialize_camera(args.camera_idx)
 
+    global game_state
     while cam.isOpened():
         # Capture frame-by-frame
         ret, frame = cam.read()
@@ -40,9 +43,10 @@ def main() -> None:
         match game_state:
             case GameState.START:
                 draw_start_screen(frame)
-            case GameState.PLAY:
-                pass
-            case GameState.END:
+            case GameState.COUNT:
+                if draw_count_down(frame):
+                    game_state = GameState.EVAL
+            case GameState.EVAL:
                 pass
             case _:
                 pass
@@ -56,6 +60,8 @@ def main() -> None:
         # Press Q on keyboard to exit
         if cv.waitKey(1) == ord("q"):
             break
+        if cv.waitKey(1) == ord(" ") and game_state == GameState.START:
+            game_state = GameState.COUNT
 
     # Cleanup
     print("Cleaning up")

@@ -2,33 +2,20 @@ from common import *
 import vision
 import cv2 as cv
 import numpy as np
+import time
 
 # Global variables
 frame_needs_scaling = False
-
-
-def scale_frame(frame: np.ndarray) -> np.ndarray:
-    """
-    Scale frame to target size
-    Remembers if scaling is needed for next frame
-    :param frame: Webcam frame to scale
-    :return: Scaled frame
-    """
-    global frame_needs_scaling
-    if frame_needs_scaling or frame.shape != CAM_SHAPE:
-        out = cv.resize(frame, (CAM_WIDTH, CAM_HEIGHT))
-        frame_needs_scaling = True
-        return out
-    return frame
+count_start_time: float = 0
 
 
 def put_text(
-    frame: np.ndarray,
-    text: any,
-    location: tuple[any, any],
-    size: int,
-    color: tuple[int, int, int],
-    thickness: int,
+        frame: np.ndarray,
+        text: any,
+        location: tuple[any, any],
+        size: int,
+        color: tuple[int, int, int],
+        thickness: int,
 ) -> None:
     """
     Put text centered on location
@@ -58,12 +45,12 @@ def put_text(
 
 
 def put_text_rect(
-    frame: np.ndarray,
-    text: any,
-    location: tuple[any, any],
-    size: int,
-    color: tuple[int, int, int],
-    thickness: int,
+        frame: np.ndarray,
+        text: any,
+        location: tuple[any, any],
+        size: int,
+        color: tuple[int, int, int],
+        thickness: int,
 ) -> None:
     """
     Put rect based on text centered on location
@@ -93,10 +80,15 @@ def put_text_rect(
 def scale_and_flip(frame: np.ndarray) -> np.ndarray:
     """
     Scale and flip frame
-    :param fame: Webcam frame to scale and flip
+    :param frame: Webcam frame to scale and flip
     :return: Scaled and flipped frame
     """
-    return cv.flip(scale_frame(frame), 1)
+    global frame_needs_scaling
+    scaled_frame = frame
+    if frame_needs_scaling or frame.shape != CAM_SHAPE:
+        scaled_frame = cv.resize(frame, (CAM_WIDTH, CAM_HEIGHT))
+        frame_needs_scaling = True
+    return cv.flip(scaled_frame, 1)
 
 
 def draw_start_screen(frame: np.ndarray) -> None:
@@ -104,7 +96,7 @@ def draw_start_screen(frame: np.ndarray) -> None:
     Draw start screen prompt
     :param frame: Webcam frame to draw on
     """
-    start_text = "Press [SPACE] to play, [Q] to quit"
+    start_text = "Hold [SPACE] to start, [Q] to quit"
     put_text_rect(
         frame, start_text, (CAM_WIDTH // 2, 0.2 * CAM_HEIGHT), 1, (100, 100, 100), 3
     )
@@ -116,6 +108,42 @@ def draw_start_screen(frame: np.ndarray) -> None:
         (255, 255, 255),
         3,
     )
+
+
+def draw_count_down(frame: np.ndarray) -> bool:
+    """
+    Draw count down
+    :param frame: Webcam frame to draw on
+    """
+    global count_start_time
+    if count_start_time == 0:
+        count_start_time = time.time()
+    count = int(5 - (time.time() - count_start_time))
+    text: str
+    match count:
+        case 1:
+            text = "SHOOT!!!"
+        case 2:
+            text = "SCISSORS"
+        case 3:
+            text = "PAPER"
+        case 4:
+            text = "ROCK"
+        case _:
+            count_start_time = 0
+            return True
+    put_text_rect(
+        frame, text, (CAM_WIDTH // 2, 0.2 * CAM_HEIGHT), 2, (100, 100, 100), 3
+    )
+    put_text(
+        frame,
+        text,
+        (CAM_WIDTH // 2, 0.2 * CAM_HEIGHT),
+        2,
+        (255, 255, 255),
+        3,
+    )
+    return False
 
 
 def draw_ui(frame: np.ndarray) -> None:
