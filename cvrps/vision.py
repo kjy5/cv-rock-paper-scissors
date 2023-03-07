@@ -8,8 +8,8 @@ import numpy as np
 device = torch.device("cpu")
 model: torch.jit.ScriptModule
 
-detected_class = "Scissors"
-detected_confidence = 99
+detected_class = "..."
+detected_confidence = 0
 
 preprocess = transforms.Compose(
     [

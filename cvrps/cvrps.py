@@ -1,9 +1,7 @@
 from ui import *
 from vision import *
 import random
-
-# Global Variables
-game_state = GameState.START
+import common
 
 
 def main() -> None:
@@ -11,6 +9,13 @@ def main() -> None:
     Run program
     :return: None
     """
+
+    # Global Variables
+    game_state = GameState.START
+    win_state = WinState.HUMAN
+    human_score = 0
+    computer_score = 0
+    played_class = "..."
 
     # Extract arguments from CLI
     args = configure_argparse().parse_args()
@@ -22,7 +27,6 @@ def main() -> None:
     # Initialize camera
     cam = initialize_camera(args.camera_idx)
 
-    global game_state
     while cam.isOpened():
         # Capture frame-by-frame
         ret, frame = cam.read()
@@ -51,18 +55,32 @@ def main() -> None:
                     continue
 
                 # Computer pick a gesture
-                # random.randint(3)
+                played_class = random.choice(CLASSES[1:])
+
+                # Determine winner
+                if detected_class == played_class:
+                    win_state = WinState.TIE
+                elif (detected_class == "rock" and played_class == "paper") or (
+                        detected_class == "paper" and played_class == "scissors") or (
+                        detected_class == "scissors" and played_class == "rock"):
+                    computer_score += 1
+                    win_state = WinState.COMPUTER
+                else:
+                    human_score += 1
+                    win_state = WinState.HUMAN
+
                 game_state = GameState.RESULT
             case GameState.FAILED:
                 if draw_failed_screen(frame):
                     game_state = GameState.START
             case GameState.RESULT:
-                game_state = GameState.START
+                if draw_result_screen(frame, win_state):
+                    game_state = GameState.START
             case _:
                 pass
 
         # Draw UI
-        draw_ui(frame)
+        draw_ui(frame, human_score, computer_score, played_class)
 
         # Display the full frame
         cv.imshow(WINDOW_NAME, frame)

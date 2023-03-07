@@ -9,11 +9,6 @@ CAM_X_START = (CAM_WIDTH - CAM_HEIGHT) // 2
 CAM_X_END = CAM_WIDTH - CAM_X_START
 CLASSES = ["clutter", "paper", "rock", "scissors"]
 
-# Global variables
-human_score = 0
-computer_score = 0
-played_class = "Scissors"
-
 
 class GameState(Enum):
     """
@@ -25,6 +20,16 @@ class GameState(Enum):
     EVAL = 2
     FAILED = 3
     RESULT = 4
+
+
+class WinState(Enum):
+    """
+    Win state
+    """
+
+    HUMAN = 0
+    COMPUTER = 1
+    TIE = 2
 
 
 def configure_argparse() -> argparse.ArgumentParser:

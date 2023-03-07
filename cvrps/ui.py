@@ -174,10 +174,51 @@ def draw_failed_screen(frame: np.ndarray) -> bool:
     return False
 
 
-def draw_ui(frame: np.ndarray) -> None:
+def draw_result_screen(frame: np.ndarray, win_state: WinState) -> bool:
+    """
+    Draw result screen
+    :param frame: Webcam frame to draw on
+    :param win_state: Win state
+    """
+    global count_start_time
+    if count_start_time == 0:
+        count_start_time = time.time()
+    text = "You win!"
+    color = (0, 255, 0)
+    match win_state:
+        case WinState.COMPUTER:
+            text = "You lose!"
+            color = (0, 0, 255)
+        case WinState.TIE:
+            text = "Tie!"
+            color = (255, 255, 255)
+
+    count = int(3 - (time.time() - count_start_time))
+    put_text_rect(
+        frame, text, (CAM_WIDTH // 2, 0.2 * CAM_HEIGHT), 2, (100, 100, 100), 2
+    )
+    put_text(
+        frame,
+        text,
+        (CAM_WIDTH // 2, 0.2 * CAM_HEIGHT),
+        2,
+        color,
+        2,
+    )
+    if count == 0:
+        count_start_time = 0
+        return True
+    return False
+
+
+def draw_ui(frame: np.ndarray, human_score: int, computer_score: int,
+            played_class: str) -> None:
     """
     Draw UI
     :param frame: Webcam frame to draw on
+    :param human_score: Human score
+    :param computer_score: Computer score
+    :param played_class: Played class
     :return: None
     """
 
@@ -194,14 +235,14 @@ def draw_ui(frame: np.ndarray) -> None:
         title_text = "YOU"
         score_val = human_score
         detected_title_text = f"Detected ({vision.detected_confidence}%)"
-        detected_text = vision.detected_class
+        detected_text = vision.detected_class.capitalize()
         if i == 1:
             x_offset = CAM_X_END
             left_coord = CAM_WIDTH
             title_text = "COM."
             score_val = computer_score
             detected_title_text = "Played"
-            detected_text = played_class
+            detected_text = played_class.capitalize()
 
         # Background
         cv.rectangle(frame, (x_offset, 0), (left_coord, CAM_HEIGHT), (15, 15, 15), -1)
