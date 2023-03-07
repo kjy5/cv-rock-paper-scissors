@@ -1,7 +1,6 @@
 from ui import *
-from vision import *
+import vision
 import random
-import common
 
 
 def main() -> None:
@@ -21,11 +20,11 @@ def main() -> None:
     args = configure_argparse().parse_args()
 
     # Setup PyTorch
-    configure_torch_gpu()
-    load_model(args.model_path)
+    vision.configure_torch_gpu()
+    vision.load_model(args.model_path)
 
     # Initialize camera
-    cam = initialize_camera(args.camera_idx)
+    cam = vision.initialize_camera(args.camera_idx)
 
     while cam.isOpened():
         # Capture frame-by-frame
@@ -50,7 +49,7 @@ def main() -> None:
                     game_state = GameState.EVAL
             case GameState.EVAL:
                 # Run the current frame through the model
-                if not make_prediction(frame):
+                if not vision.make_prediction(frame):
                     game_state = GameState.FAILED
                     continue
 
@@ -58,22 +57,27 @@ def main() -> None:
                 played_class = random.choice(CLASSES[1:])
 
                 # Determine winner
-                if detected_class == played_class:
+                human_pick = vision.detected_class
+                if human_pick == played_class:
                     win_state = WinState.TIE
-                elif (detected_class == "rock" and played_class == "paper") or (
-                        detected_class == "paper" and played_class == "scissors") or (
-                        detected_class == "scissors" and played_class == "rock"):
+                elif (
+                    (human_pick == "rock" and played_class == "paper")
+                    or (human_pick == "paper" and played_class == "scissors")
+                    or (human_pick == "scissors" and played_class == "rock")
+                ):
                     computer_score += 1
                     win_state = WinState.COMPUTER
                 else:
                     human_score += 1
                     win_state = WinState.HUMAN
 
+                print("Changed win state: " + str(win_state))
                 game_state = GameState.RESULT
             case GameState.FAILED:
                 if draw_failed_screen(frame):
                     game_state = GameState.START
             case GameState.RESULT:
+                print(win_state)
                 if draw_result_screen(frame, win_state):
                     game_state = GameState.START
             case _:

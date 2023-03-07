@@ -10,12 +10,12 @@ count_start_time: float = 0
 
 
 def put_text(
-        frame: np.ndarray,
-        text: any,
-        location: tuple[any, any],
-        size: int,
-        color: tuple[int, int, int],
-        thickness: int,
+    frame: np.ndarray,
+    text: any,
+    location: tuple[any, any],
+    size: int,
+    color: tuple[int, int, int],
+    thickness: int,
 ) -> None:
     """
     Put text centered on location
@@ -45,12 +45,12 @@ def put_text(
 
 
 def put_text_rect(
-        frame: np.ndarray,
-        text: any,
-        location: tuple[any, any],
-        size: int,
-        color: tuple[int, int, int],
-        thickness: int,
+    frame: np.ndarray,
+    text: any,
+    location: tuple[any, any],
+    size: int,
+    color: tuple[int, int, int],
+    thickness: int,
 ) -> None:
     """
     Put rect based on text centered on location
@@ -211,8 +211,9 @@ def draw_result_screen(frame: np.ndarray, win_state: WinState) -> bool:
     return False
 
 
-def draw_ui(frame: np.ndarray, human_score: int, computer_score: int,
-            played_class: str) -> None:
+def draw_ui(
+    frame: np.ndarray, human_score: int, computer_score: int, played_class: str
+) -> None:
     """
     Draw UI
     :param frame: Webcam frame to draw on
