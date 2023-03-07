@@ -71,13 +71,11 @@ def main() -> None:
                     human_score += 1
                     win_state = WinState.HUMAN
 
-                print("Changed win state: " + str(win_state))
                 game_state = GameState.RESULT
             case GameState.FAILED:
                 if draw_failed_screen(frame):
                     game_state = GameState.START
             case GameState.RESULT:
-                print(win_state)
                 if draw_result_screen(frame, win_state):
                     game_state = GameState.START
             case _:
