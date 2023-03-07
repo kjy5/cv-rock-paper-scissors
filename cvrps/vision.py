@@ -70,11 +70,11 @@ def load_model(path: str) -> None:
     model.eval()
 
 
-def make_prediction(frame: np.ndarray) -> None:
+def make_prediction(frame: np.ndarray) -> bool:
     """
     Predict the most likely gesture out of rock, paper, scissors, or none
     :param frame: A frame from the webcam
-    :return: None
+    :return: True if a gesture was detected, False otherwise
     """
 
     # Convert to tensor
@@ -86,3 +86,5 @@ def make_prediction(frame: np.ndarray) -> None:
     global detected_class, detected_confidence
     detected_class = CLASSES[gesture]
     detected_confidence = int(output[gesture] * 100)
+
+    return gesture != 0

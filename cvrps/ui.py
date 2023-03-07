@@ -146,6 +146,34 @@ def draw_count_down(frame: np.ndarray) -> bool:
     return False
 
 
+def draw_failed_screen(frame: np.ndarray) -> bool:
+    """
+    Draw failed screen prompt
+    :param frame: Webcam frame to draw on
+    """
+    global count_start_time
+    if count_start_time == 0:
+        count_start_time = time.time()
+    text = "No gesture detected, please try again"
+    count = int(4 - (time.time() - count_start_time))
+    put_text_rect(
+        frame, text, (CAM_WIDTH // 2, 0.2 * CAM_HEIGHT), 1, (100, 100, 100), 2
+    )
+    put_text(
+        frame,
+        text,
+        (CAM_WIDTH // 2, 0.2 * CAM_HEIGHT),
+        1,
+        (255, 255, 255),
+        2,
+    )
+
+    if count == 0:
+        count_start_time = 0
+        return True
+    return False
+
+
 def draw_ui(frame: np.ndarray) -> None:
     """
     Draw UI

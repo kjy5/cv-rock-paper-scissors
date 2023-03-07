@@ -46,16 +46,18 @@ def main() -> None:
                     game_state = GameState.EVAL
             case GameState.EVAL:
                 # Run the current frame through the model
-                make_prediction(frame)
-
-                # TODO: prompt user again if clutter
+                if not make_prediction(frame):
+                    game_state = GameState.FAILED
+                    continue
 
                 # Computer pick a gesture
                 # random.randint(3)
                 game_state = GameState.RESULT
+            case GameState.FAILED:
+                if draw_failed_screen(frame):
+                    game_state = GameState.START
             case GameState.RESULT:
-
-                pass
+                game_state = GameState.START
             case _:
                 pass
 
