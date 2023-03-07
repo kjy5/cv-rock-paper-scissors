@@ -1,5 +1,7 @@
 # Computer Vision Rock Paper Scissors
 
+[![pages-build-deployment](https://github.com/kjy5/cv-rock-paper-scissors/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/kjy5/cv-rock-paper-scissors/actions/workflows/pages/pages-build-deployment)
+
 CSE 455 Wi23 final project by David Stumph and Kenneth Yang.
 
 We created a program that would allow a human to play Rock Paper Scissors with a
