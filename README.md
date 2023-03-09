@@ -1,8 +1,7 @@
 # Computer Vision Rock Paper Scissors
 
-[![pages-build-deployment](https://github.com/kjy5/cv-rock-paper-scissors/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/kjy5/cv-rock-paper-scissors/actions/workflows/pages/pages-build-deployment)
-
-CSE 455 Wi23 final project by David Stumph and Kenneth Yang.
+CSE 455 Wi23 final project by [David Stumph](https://github.com/Davester47)
+and [Kenneth Yang](https://github.com/kjy5).
 
 We created a program that would allow a human to play Rock Paper Scissors with a
 computer, without needing to use a keyboard or mouse to enter in their move.
@@ -82,3 +81,7 @@ We created our own training dataset by taking videos and pictures of ourselves,
 and we also wrote the training code for the model (with some inspiration from
 the sources in the previous section). We created our own custom UI with OpenCV
 for the game itself.
+
+See our code [on GitHub](https://github.com/kjy5/cv-rock-paper-scissors)
+
+[![pages-build-deployment](https://github.com/kjy5/cv-rock-paper-scissors/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/kjy5/cv-rock-paper-scissors/actions/workflows/pages/pages-build-deployment)
