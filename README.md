@@ -82,6 +82,17 @@ and we also wrote the training code for the model (with some inspiration from
 the sources in the previous section). We created our own custom UI with OpenCV
 for the game itself.
 
+## Ideas for future work
+
+We had a difficult time getting our model to generalize well, and gathering a
+much larger dataset would have helped. Ideally, we would collect the gestures
+from a lot more than just three people, with a wide range of skin colors included.
+
+Improvements to the UI could also be made, but that was not the focus of the project.
+In particular, the prompting mechanism is a little clumsy. In the future, we could
+have also trained the model to recognize when a gesture has been made, so the user
+wouldn't need to wait on the prompt and they could just make a move.
+
 See our code [on GitHub](https://github.com/kjy5/cv-rock-paper-scissors)
 
 [![pages-build-deployment](https://github.com/kjy5/cv-rock-paper-scissors/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/kjy5/cv-rock-paper-scissors/actions/workflows/pages/pages-build-deployment)
