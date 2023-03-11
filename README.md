@@ -50,7 +50,10 @@ rather than just guess a gesture if the image had none.
 To gather data used for training our model, we used a greenscreen background and
 a camera with a high shutter speed. This allowed us to replace the background
 with random “clutter” images from the Tiny ImageNet dataset to increase the
-generalizability of our data and to also reduce motion blur in our images.
+generalizability of our data and to also reduce motion blur in our images. The
+video also allowed us to capture the hand gestures at various angles which will
+be more specific than using a existing data model on similar hand gestures like
+an ASL data set.
 
 Tiny ImageNet contains 10,000 photos. To ensure we didn’t have a
 disproportionate amount of clutter images compared to our training images we
