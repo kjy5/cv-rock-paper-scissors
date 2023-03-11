@@ -3,8 +3,12 @@
 CSE 455 Wi23 final project by [David Stumph](https://github.com/Davester47)
 and [Kenneth Yang](https://github.com/kjy5).
 
+![Demo](demo.gif)
+
 We created a program that would allow a human to play Rock Paper Scissors with a
 computer, without needing to use a keyboard or mouse to enter in their move.
+
+[Video Presentation](https://youtu.be/FDJvC4X2EH0)
 
 # Installation and Usage
 
@@ -86,11 +90,15 @@ for the game itself.
 
 We had a difficult time getting our model to generalize well, and gathering a
 much larger dataset would have helped. Ideally, we would collect the gestures
-from a lot more than just three people, with a wide range of skin colors included.
+from a lot more than just three people, with a wide range of skin colors
+included.
 
-Improvements to the UI could also be made, but that was not the focus of the project.
-In particular, the prompting mechanism is a little clumsy. In the future, we could
-have also trained the model to recognize when a gesture has been made, so the user
+Improvements to the UI could also be made, but that was not the focus of the
+project.
+In particular, the prompting mechanism is a little clumsy. In the future, we
+could
+have also trained the model to recognize when a gesture has been made, so the
+user
 wouldn't need to wait on the prompt and they could just make a move.
 
 See our code [on GitHub](https://github.com/kjy5/cv-rock-paper-scissors)
