@@ -104,6 +104,6 @@ have also trained the model to recognize when a gesture has been made, so the
 user
 wouldn't need to wait on the prompt and they could just make a move.
 
-See our code [on GitHub](https://github.com/kjy5/cv-rock-paper-scissors)
+See our code [on GitHub](https://github.com/kjy5/cv-rock-paper-scissors) (public archive)
 
 [![pages-build-deployment](https://github.com/kjy5/cv-rock-paper-scissors/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/kjy5/cv-rock-paper-scissors/actions/workflows/pages/pages-build-deployment)
